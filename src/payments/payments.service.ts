@@ -35,14 +35,15 @@ export class PaymentsService {
       cancel_url: envs.stripeCancelUrl,
     });
 
-    return session;
+    return {
+      cancelsUrl: session.cancel_url,
+      successUrl: session.success_url,
+      url: session.url,
+    };
   }
 
   async stripeWebhook(req: Request, res: Response) {
     const sig = req.headers['stripe-signature'];
-    // Testing
-    // const endpointSecret =
-    //   'whsec_10e9ba668f17d1218efdfb18e789cbd6350a399d7f1eaeb596a28dea70637f4c';
 
     const endpointSecret = envs.stripeEndpointSecret;
 
